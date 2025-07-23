@@ -1,0 +1,383 @@
+/* Dashboard.css - Optimized version */
+
+/* Header Styles */
+.header {
+  background-color: #2C3333;
+  color: #CBE4DE;
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.header.scrolled {
+  padding: 0.5rem 2rem;
+  background-color: rgba(44, 51, 51, 0.95);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+
+.logo-acc {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  z-index: 1001;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.logo-wrapper:hover {
+  transform: translateY(-2px);
+}
+
+.logo-icon {
+  background-color: #0E8388;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px 0 rgb(203, 228, 222);
+}
+
+.logo-icon:hover {
+  transform: rotate(15deg) scale(1.1);
+  background-color: #2E4F4F;
+}
+
+.logo-icon img {
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.logo-text {
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+/* Navigation */
+.nav-list {
+  display: flex;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  color: #CBE4DE;
+  text-decoration: none;
+  padding: 0.8rem 1rem;
+  border-radius: 0.8rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  position: relative;
+  overflow: hidden;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background-color: #0E8388;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::before {
+  width: 60%;
+}
+
+.nav-link:hover {
+  background-color: rgba(46, 79, 79, 0.3);
+  transform: translateY(-3px);
+}
+
+.nav-link.active {
+  background-color: rgba(14, 131, 136, 0.2);
+  color: white;
+  font-weight: 600;
+}
+
+.nav-link.active::before {
+  width: 80%;
+  background-color: #CBE4DE;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover .nav-icon {
+  transform: scale(1.2);
+}
+
+.nav-label {
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 1002;
+}
+
+.menu-icon {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #CBE4DE;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: #CBE4DE;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+.menu-icon::before {
+  top: -8px;
+}
+
+.menu-icon::after {
+  top: 8px;
+}
+
+.mobile-menu-btn.open .menu-icon {
+  background-color: transparent;
+}
+
+.mobile-menu-btn.open .menu-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.mobile-menu-btn.open .menu-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 992px) {
+  .header-container {
+    flex-wrap: wrap;
+  }
+  
+  .nav-list {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.8rem 1.2rem;
+  }
+  
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo-text {
+    font-size: 1.1rem;
+  }
+  
+  .nav {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: #2C3333;
+    padding: 1rem 1.5rem;
+    transform: translateY(-150%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 999;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+  
+  .nav.mobile-open {
+    transform: translateY(0);
+  }
+  
+  .nav-list {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .nav-link {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  .nav-link::before {
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    width: 3px;
+    height: 0;
+    transform: none;
+  }
+  
+  .nav-link:hover::before,
+  .nav-link.active::before {
+    width: 3px;
+    height: 60%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.6rem 1rem;
+  }
+  
+  .logo-text {
+    font-size: 10px;
+    position: relative;
+    right: 150px;
+  }
+  
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    right: 305px; 
+  }
+
+
+  .logo-icon img {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+
+
+/* Add to Dashboard.css */
+.login-notification-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  background-color: #2C3333;
+  color: #CBE4DE;
+  border: 3px dashed #ff0000;
+  border-radius: 10px;
+  box-shadow: 0 0 0 10px rgba(44, 51, 51, 0.8);
+  z-index: 2000;
+  text-align: center;
+  max-width: 80%;
+  animation: pulse 2s infinite;
+}
+
+.login-notification-box h3 {
+  margin-bottom: 1rem;
+  color: #0E8388;
+}
+
+.login-notification-box p {
+  margin-bottom: 1.5rem;
+}
+
+.login-notification-box button {
+  background-color: #0E8388;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-notification-box button:hover {
+  background-color: #2E4F4F;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+/* Add dashed border animation */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.dashed-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.dashed-border rect {
+  fill: none;
+  stroke: #ff0000;
+  stroke-width: 3;
+  stroke-dasharray: 10, 5;
+  animation: dash 3s linear infinite;
+}
