@@ -8,17 +8,13 @@ import Transiction from "./screens/Transiction";
 import Expenses from "./screens/Expenses";
 import Report from "./screens/Report";
 import Revenue from "./screens/Revenue";
-import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [activeNav, setActiveNav] = useState(() => {
     return localStorage.getItem("activeNav") || "دەستپێک";
   });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [profilePhoto, setProfilePhoto] = useState(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [showLoginNotification, setShowLoginNotification] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if user just logged in
@@ -39,14 +35,6 @@ const Dashboard = () => {
   useEffect(() => {
     localStorage.setItem("activeNav", activeNav);
   }, [activeNav]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     {
@@ -93,17 +81,6 @@ const Dashboard = () => {
     },
   ];
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePhoto(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     <div className="body">
       {showLoginNotification && (
@@ -117,7 +94,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      <header className={`header ${isScrolled ? "scrolled" : ""} ${isMobileMenuOpen ? "mobile-menu-open" : ""}`}>
+      <header className={`header ${isMobileMenuOpen ? "mobile-menu-open" : ""}`}>
         <div className="header-container">
           <div className="logo-acc">
             <button 

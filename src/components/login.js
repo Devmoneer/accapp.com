@@ -5,70 +5,131 @@ import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({ email: '', password: '', general: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!email || !password) {
-            setError('!بەرێز هێڤیە ئیمێل و پەیڤا نهێنی بنفیسە');
-            return;
-        }
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { email: '', password: '', general: '' };
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            
-            // Store user email in localStorage
-            localStorage.setItem('userEmail', email);
-            setError('');
-            navigate('/dashboard');
-        } catch (error) {
-            console.error('Login error:', error);
-            setError('!ئیمێل یان پەیڤا نهێنی هەڵەیە');
-        }
-    };
+    if (!email) {
+      newErrors.email = '!ئیمێل پێدڤیە';
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = '!ئیمێل دروست نینە';
+      valid = false;
+    }
 
-    return (
-        <div className='body-login'>
-            <div className='login-container'>
-                <div className='heading-login'>چوناژوور</div>
-                <form onSubmit={handleSubmit}>
-                    <label>ئیمێل</label>
-                    <input 
-                        placeholder='..ئیمێلی خۆ بنفیسە' 
-                        type='email' 
-                        className='email-input' 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <label>پەیڤا نهێنی</label>
-                    <input 
-                        placeholder='..پەیڤا نهێنی بنفیسە' 
-                        type='password' 
-                        className='password-input' 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    {error && <p className='error-message'>{error}</p>}
-                    <button type='submit' className='login'>چوناژوور</button>
-                </form>
-                <p className='info-for-user'>
-                    <img alt='info-icon' src='images/info-circle-svgrepo-com.svg' width={25}/> <br/>
-                    بەرێز داکۆ بشێی ڤی سیستەمێ ژمێریاری بکار بینی بۆ کومپانیا خۆ یان جهێ کارێ خۆ پێدڤیە پەیوەندیێ بمە بکەی ل سەر ڤێ ژمارێ ( 5010 346 0750 ) ب ئێك ژڤان رێکا
-                </p>
-                <div className='social-icons'>
-                    <a href='#'><img alt='icon' src='images/whatsapp-social-media-svgrepo-com.svg' width={20}/></a>
-                    <a href='#'><img alt='icon' src='images/telegram-svgrepo-com (1).svg' width={20}/></a>
-                    <a href='#'><img alt='icon' src='images/instagram-svgrepo-com.svg' width={20}/></a>
-                </div>
-                <p className='text-about-app'>
-                    سلاڤ بەرێز ئەڤ وێب ئەپلیکەیشنە هاتیە دروستکرن ژبۆ کار ئاسانیا ژمێریار ئانکو محاسبێ کومپانیا تە بۆ نفێسین ۆ تومارکرنا هەمی مامەلێن بۆ کومپانیا تە دهێن یان جهێ کارێ تە 
-                </p>
-            </div>
+    if (!password) {
+      newErrors.password = '!پەیڤا نهێنی پێدڤیە';
+      valid = false;
+    } else if (password.length < 6) {
+      newErrors.password = '!پێدڤیە ژ 6 پیتان کێمتر نەبیتن بەرێز';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('justLoggedIn', 'true');
+      setErrors({ ...errors, general: '' });
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrors({ ...errors, general: '!ئیمێل یان پەیڤا نهێنی خەڵەتە' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className='auth-container'>
+      <div className='auth-card'>
+        <div className='auth-header'>
+          <div className='logo-wrapper'>
+            <img src='images/analysis-svgrepo-com.svg' alt='logo' className='auth-logo' />
+            <h1>سیستەمێ ژمێریاری</h1>
+          </div>
+          <h2>چوناژوور</h2>
         </div>
-    );
+
+        <form onSubmit={handleSubmit} className='auth-form'>
+          <div className='input-group'>
+            <label>ئیمێل</label>
+            <input
+              placeholder='..ئیمێلی خۆ بنفیسە'
+              type='email'
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors({ ...errors, email: '' });
+              }}
+              className={errors.email ? 'input-error' : ''}
+            />
+            {errors.email && <span className="input-error-message">{errors.email}</span>}
+          </div>
+
+          <div className='input-group'>
+            <label>پەیڤا نهێنی</label>
+            <input
+              placeholder='..پەیڤا نهێنی بنفیسە'
+              type='password'
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrors({ ...errors, password: '' });
+              }}
+              className={errors.password ? 'input-error' : ''}
+            />
+            {errors.password && <span className="input-error-message">{errors.password}</span>}
+          </div>
+
+          {errors.general && <p className='error-message'>{errors.general}</p>}
+
+          <button type='submit' className='login' disabled={isLoading}>
+            {isLoading ? (
+              <div className="spinner">
+                <div className="spinner-sector spinner-sector-red"></div>
+                <div className="spinner-sector spinner-sector-blue"></div>
+                <div className="spinner-sector spinner-sector-green"></div>
+              </div>
+            ) : 'چوناژوور'}
+          </button>
+
+          <div className='auth-footer'>
+            <p>تەهێشتا ئەکاونت نینە؟ <span className="auth-link" onClick={() => navigate('/register')}>خۆ تۆمار بکە</span></p>
+          </div>
+        </form>
+
+        <div className='auth-divider'>
+          <span className='divider-text'>یان</span>
+        </div>
+
+        <div className='social-auth'>
+          <button className='social-button google'>
+            <img src='images/google-svgrepo-com.svg' alt='google' />
+            چوناژوور ب گووگڵی
+          </button>
+          <button className='social-button facebook'>
+            <img src='images/facebook-svgrepo-com.svg' alt='facebook' />
+            چوناژوور ب فەیسبووکی
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Login;
