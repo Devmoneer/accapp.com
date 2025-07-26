@@ -10,14 +10,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: all 0.3s ease;
-}
-
-.header.scrolled {
-  padding: 0.5rem 2rem;
-  background-color: rgba(44, 51, 51, 0.95);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  width: 100%;
 }
 
 .header-container {
@@ -28,7 +21,6 @@
   margin: 0 auto;
   position: relative;
 }
-
 
 .logo-acc {
   display: flex;
@@ -43,11 +35,6 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  transition: transform 0.3s ease;
-}
-
-.logo-wrapper:hover {
-  transform: translateY(-2px);
 }
 
 .logo-icon {
@@ -58,22 +45,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
   box-shadow: 0 2px 12px 0 rgb(203, 228, 222);
-}
-
-.logo-icon:hover {
-  transform: rotate(15deg) scale(1.1);
-  background-color: #2E4F4F;
 }
 
 .logo-icon img {
   filter: brightness(0) invert(1);
-  transition: transform 0.3s ease;
 }
 
 .logo-text {
-  transition: all 0.3s ease;
   font-weight: 600;
 }
 
@@ -99,7 +78,6 @@
   text-decoration: none;
   padding: 0.8rem 1rem;
   border-radius: 0.8rem;
-  transition: all 0.3s ease;
   font-size: 0.95rem;
   position: relative;
   overflow: hidden;
@@ -126,7 +104,6 @@
 
 .nav-link:hover {
   background-color: rgba(46, 79, 79, 0.3);
-  transform: translateY(-3px);
 }
 
 .nav-link.active {
@@ -142,15 +119,9 @@
 
 .nav-icon {
   font-size: 1.2rem;
-  transition: transform 0.3s ease;
-}
-
-.nav-link:hover .nav-icon {
-  transform: scale(1.2);
 }
 
 .nav-label {
-  transition: all 0.3s ease;
   font-size: 0.85rem;
 }
 
@@ -289,28 +260,21 @@
   }
   
   .logo-text {
-    font-size: 10px;
-    position: relative;
-    right: 150px;
+    font-size: 1rem;
   }
   
   .logo-icon {
-    width: 28px;
-    height: 28px;
-    position: relative;
-    right: 305px; 
+    width: 32px;
+    height: 32px;
   }
-
-
+  
   .logo-icon img {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
   }
 }
 
-
-
-/* Add to Dashboard.css */
+/* Login Notification Styles (unchanged) */
 .login-notification-box {
   position: fixed;
   top: 50%;
@@ -357,7 +321,6 @@
   100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
 }
 
-/* Add dashed border animation */
 @keyframes dash {
   to {
     stroke-dashoffset: -100;
